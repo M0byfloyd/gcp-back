@@ -7,6 +7,8 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -18,13 +20,16 @@ class User
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['formDetail'])]
     #[ORM\Column(length: 255)]
     private ?string $firstname = null;
 
+    #[Groups(['formDetail'])]
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
-    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Form::class)]
+    #[Ignore]
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Form::class, cascade: ['persist'])]
     private Collection $forms;
 
     #[ORM\Column(length: 255, nullable: true)]

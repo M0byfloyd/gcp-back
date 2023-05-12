@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\InputRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: InputRepository::class)]
 #[ApiResource]
@@ -15,21 +17,20 @@ class Input
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Ignore]
     #[ORM\ManyToOne(inversedBy: 'inputs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Form $form = null;
 
+    #[Ignore]
     #[ORM\Column]
     private ?bool $value = null;
-
-    #[ORM\Column]
+    #[Groups(['formDetail'])]
+    #[ORM\Column(nullable: true)]
     private ?bool $userValue = null;
 
     #[ORM\ManyToOne(inversedBy: 'inputs')]
     private ?Question $question = null;
-
-    #[ORM\ManyToOne(inversedBy: 'inputs')]
-    private ?Response $response = null;
 
     public function getId(): ?int
     {
@@ -80,18 +81,6 @@ class Input
     public function setQuestion(?Question $question): self
     {
         $this->question = $question;
-
-        return $this;
-    }
-
-    public function getResponse(): ?Response
-    {
-        return $this->response;
-    }
-
-    public function setResponse(?Response $response): self
-    {
-        $this->response = $response;
 
         return $this;
     }

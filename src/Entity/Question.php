@@ -6,6 +6,8 @@ use App\Repository\QuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 class Question
@@ -15,12 +17,15 @@ class Question
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['formDetail'])]
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
+    #[Groups(['formDetail'])]
     #[ORM\Column]
     private ?int $points = null;
 
+    #[Ignore]
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: Input::class)]
     private Collection $inputs;
 
