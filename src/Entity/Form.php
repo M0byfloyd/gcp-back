@@ -5,7 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
-use App\Controller\FormController;
+use App\Controller\FormCalculatorController;
+use App\Controller\FormGeneratorController;
 use App\Repository\FormRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,7 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new Post(
-            controller: FormController::class,
+            controller: FormGeneratorController::class,
         ),
         new Get(
             normalizationContext: ['groups' => ['formDetail']],
@@ -26,6 +27,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: FormRepository::class)]
 class Form
 {
+    #[Groups(['formDetail'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 #[AsController]
-class FormController extends AbstractController
+class FormGeneratorController extends AbstractController
 {
     public function __invoke(QuestionRepository $questionRepository, Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
